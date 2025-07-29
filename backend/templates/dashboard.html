@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='dashboard.css') }}">
+</head>
+<body>
+
+    <h2>Upload a File</h2>
+
+    <!-- Upload Form -->
+    <form method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Encrypt & Upload</button>
+    </form>
+
+    <!-- Uploaded File Message and Link -->
+    {% if signed_url %}
+    <div class="upload-result">
+        <h3>File Uploaded and Encrypted Successfully!</h3>
+        <p>Click the link below to download the encrypted file:</p>
+        <input type="text" value="{{ signed_url }}" readonly id="downloadLink">
+        <button onclick="copyLink()">Copy to Clipboard</button>
+        <p>Filename: {{ filename }}</p>
+    </div>
+    {% endif %}
+
+    <!-- Download Form -->
+    <form action="/download" method="get">
+        <label for="filename">Enter file name to download:</label>
+        <input type="text" id="filename" name="filename" required>
+        <button type="submit">Download & Decrypt</button>
+    </form>
+
+    <!-- JS for Copy Button -->
+    <script>
+        function copyLink() {
+            const input = document.getElementById("downloadLink");
+            input.select();
+            input.setSelectionRange(0, 99999); // for mobile
+            document.execCommand("copy");
+            alert("Link copied!");
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,5 @@
+flask
+pycryptodome
+google-cloud-storage
+flask-mysql
+flask-session
